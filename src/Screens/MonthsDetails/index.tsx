@@ -7,6 +7,7 @@ import IconNot from 'react-native-vector-icons/Entypo'
 import { ViewLegend, ViewText, TextLegend, ViewIndice, ViewItem, TextItem,ViewFlat } from './styles';
 import ListDetails from '../../Components/ListDetails';
 import { getStorage, setStorage } from '../../Utils/Storage';
+import { formatMoney, formatNumber, formatPrice } from '../../Utils/format';
 
 
 interface pucharseMensalProps {
@@ -58,8 +59,16 @@ useEffect(() => {
 },[dateMonth])
 
 useEffect(() => {
+  
+ 
   if(spendingMonth){
-    setRemaining((props.route.params.income.income - spendingMonth))
+    const money = formatMoney(spendingMonth)
+    const moneyS = money.replace(/([^\d])+/gim, '')
+    console.log(props.route.params.income.income )
+    console.log(moneyS)
+    console.log(props.route.params.income.income - moneyS)
+    
+    setRemaining(props.route.params.income.income - moneyS)
   }
 },[spendingMonth])
 
@@ -120,9 +129,9 @@ console.log(itemPayment)
     <SafeBackground isHome={false} title={props.route.params.title} >
       <CardInfo
         titleCardPrimary1={`Gasto total do mês de ${props.route.params.title}`}
-        valuePrimary1={spendingMonth}
+        valuePrimary1={formatMoney(spendingMonth)}
         titleCardSecundary='Saldo restante para gastos'
-        valueSecudary={remaining}
+        valueSecudary={remaining < 0 ? `R$ -${formatPrice(remaining) }`: `R$ ${formatPrice(remaining)}`}
       />
 
       <ViewLegend>

@@ -13,13 +13,13 @@ import ItemPay from '../../Components/ItemPay';
 import { getStorage, setStorage } from '../../Utils/Storage'
 import 'moment/locale/pt-br'
 import moment from 'moment';
+import { formatMoney, formatNumber, formatPrice } from '../../Utils/format';
+import { Double } from 'react-native/Libraries/Types/CodegenTypes';
 
 
 interface storeProps {
-  store: {
     name: string;
-    income: number;
-  }
+    income: Double;
 }
 interface pucharseCardProps {
   nameCard: string;
@@ -64,7 +64,8 @@ const Home: React.FC = () => {
   const [visibleModalInitial, setVisibleModalInitial] = useState(false)
   const [textName, setTextName] = useState('')
   const [textValue, setTextValue] = useState('')
-  const [store, setStore] = useState({})
+  const [income, setIncome ] = useState(0)
+  const [store, setStore] = useState<storeProps>()
   const [totalCard, setTotalCard] = useState(0);
   const [totalMonthante, setTotalMonthAnte] = useState(0);
   const [totalMoney, setTotalMoney] = useState(0);
@@ -160,6 +161,7 @@ const Home: React.FC = () => {
     const storageSaveCard = await getStorage('dataCard');
     const storageSavePucharseCard = await getStorage('PucharseCard');
     const storageSavePucharseMoney = await getStorage('PucharseMoney');
+
     if (storageSaveDataInicial) {
       setStore(storageSaveDataInicial)
     } else {
@@ -215,6 +217,12 @@ const Home: React.FC = () => {
   }, [pusharseMensal])
 
   useEffect(() => {
+    if(store){
+      setIncome(store.income)
+    }
+  }, [store])
+
+  useEffect(() => {
     setTotalMonth(totalCard + totalMoney)
   }, [totalMoney, totalCard, storePucharseCard, setStoragePucharseMoney, monthsList])
 
@@ -223,7 +231,7 @@ const Home: React.FC = () => {
   const handleNavigation = (item: string, screen: string) => {
     setVisibleModalPayment(false)
     const dataMonth = pusharseMensal.filter(items => items.months === item)
-
+    
     if (checkCard) {
       navigation.navigate(screen, { title: item, view: 'card' })
     } else if (checkMoney) {
@@ -272,10 +280,15 @@ const Home: React.FC = () => {
     setCheckNew(!checkNew)
   }
 
+  const handleMensal = (value: any) => {
+    const number = formatPrice(value)
+    setTextValue(number)
+  }
+
   const handleSetDataInicial = () => {
     const data = {
       name: textName,
-      income: textValue
+      income: textValue.replace(/([^\d])+/gim, '')
     }
     setStorage('DataInicial', data)
     setStore(data)
@@ -349,11 +362,11 @@ const Home: React.FC = () => {
           />
           <Input
             Label='Qual sua renda mensal ?'
-            placeholder='2954'
+            placeholder='2954,00'
             keyboardType='numeric'
             placeholderTextColor='#999591'
             value={textValue}
-            onChangeText={setTextValue}
+            onChangeText={handleMensal}
           />
           <View style={{ marginVertical: 25 }} >
             <Button
@@ -365,11 +378,11 @@ const Home: React.FC = () => {
 
         <CardInfo
           titleCardPrimary1="Renda mensal"
-          valuePrimary1={store ? store.income : ""}
+          valuePrimary1={`R$ ${formatPrice(income)}`}
           titleCardPrimary2='Gasto mês anterior'
-          valuePrimary2={totalMonthante}
+          valuePrimary2={formatMoney(totalMonthante)}
           titleCardSecundary='Total a pagar no mês atual'
-          valueSecudary={totalMonth}
+          valueSecudary={formatMoney(totalMonth)}
         />
 
         {monthsList.length != 0 &&

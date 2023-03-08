@@ -1,5 +1,6 @@
 import React from 'react';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, } from '@react-navigation/drawer';
+import DeviceInfo from "react-native-device-info";
 import { View, Text } from 'react-native';
 import { AppRoutes } from './app.routes';
 
@@ -95,7 +96,7 @@ const CustomDrawerContent = (props: any) => {
                             margin: 32,
                             marginBottom: 24,
                         }}>
-                        Versão 1.0.0
+                        Versão {DeviceInfo.getVersion()}
                     </Text>
                 </View>
             </View>

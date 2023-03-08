@@ -13,11 +13,11 @@ import {
 interface cardProps {
     solo?: boolean
     titleCardPrimary1?: string;
-    valuePrimary1?: number;
+    valuePrimary1?: string;
     titleCardPrimary2?: string;
-    valuePrimary2?: number;
+    valuePrimary2?: string;
     titleCardSecundary?: string,
-    valueSecudary?: number
+    valueSecudary?: string
     info?: string
 }
 
@@ -39,14 +39,14 @@ const CardInfo: React.FC<cardProps> = ({
                         <ViewMensal>
                             <TextTitle>{titleCardPrimary1}</TextTitle>
                             <ViewText>
-                                <TextValue>R$ {valuePrimary1}</TextValue>
+                                <TextValue>{valuePrimary1}</TextValue>
                             </ViewText>
                         </ViewMensal>
                         {titleCardPrimary2 &&
                         <ViewSpeding>
                         <TextTitle>{titleCardPrimary2}</TextTitle>
                         <ViewText>
-                            <TextValue>R$ {valuePrimary2}</TextValue>
+                            <TextValue>{valuePrimary2}</TextValue>
                         </ViewText>
                     </ViewSpeding>
                         }
@@ -55,7 +55,7 @@ const CardInfo: React.FC<cardProps> = ({
                         <ViewSpeding>
                             <TextTitle>{titleCardSecundary}</TextTitle>
                             <ViewText>
-                                <TextValue>R$ {valueSecudary}</TextValue>
+                                <TextValue>{valueSecudary}</TextValue>
                             </ViewText>
                         </ViewSpeding>
                     </Container>

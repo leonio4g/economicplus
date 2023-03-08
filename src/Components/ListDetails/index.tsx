@@ -4,6 +4,7 @@ import IconCheck from 'react-native-vector-icons/AntDesign'
 import IconCircle from 'react-native-vector-icons/Entypo'
 
 import IconArrow from 'react-native-vector-icons/Entypo'
+import { formatMoney } from '../../Utils/format';
 import {
   Container,
   ViewIcon,
@@ -49,7 +50,7 @@ const ListDetails: React.FC <listProps> = ({
       </ViewIcon>
       <ViewText>
         <TextTitle>{title}</TextTitle>
-        <TextTotal>Valor : R$ {value}</TextTotal>
+        <TextTotal>Valor : {formatMoney(value)}</TextTotal>
         <TextTotal>Data da compra : {dateSpeding}</TextTotal>
         {installments > 1 ?
         <TextTotal>Parcelas : {numberInstallment}/{installments}</TextTotal>

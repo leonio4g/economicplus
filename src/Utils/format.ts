@@ -33,3 +33,11 @@ export const formatData = (d: string) => {
           }
           return value
   }
+  export const formatPrice = (value: number) => {
+    if (value) {
+      let vl = VMasker.toMoney(value)
+      return vl
+    }
+    return "R$ 00,00"
+  }
+
