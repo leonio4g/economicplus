@@ -10,6 +10,7 @@ import { getStorage, setStorage } from '../../Utils/Storage';
 import moment from 'moment';
 
 interface cardProps {
+  id: string;
   nameCard: string;
   maturity: string;
   closed: string;

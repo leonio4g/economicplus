@@ -15,6 +15,7 @@ import 'moment/locale/pt-br'
 import moment from 'moment';
 import { formatMoney, formatNumber, formatPrice } from '../../Utils/format';
 import { Double } from 'react-native/Libraries/Types/CodegenTypes';
+import LoadingApp from '../../Components/LoadingApp';
 
 
 interface storeProps {
@@ -62,6 +63,7 @@ const Home: React.FC = () => {
   const [monthsList, setMonthsList] = useState([])
   const [visibleModalPayment, setVisibleModalPayment] = useState(false)
   const [visibleModalInitial, setVisibleModalInitial] = useState(false)
+  
   const [textName, setTextName] = useState('')
   const [textValue, setTextValue] = useState('')
   const [income, setIncome ] = useState(0)
@@ -74,80 +76,19 @@ const Home: React.FC = () => {
   const [checkCard, setCheckCard] = useState(false);
   const [checkMoney, setCheckMoney] = useState(false);
   const [checkNew, setCheckNew] = useState(false);
+const [modalLoading, setModalLoading ] = useState(false)
 
-
-  const data = [
-    {
-      id: "1",
-      title: "Janeiro",
-      speding: 2354
-    },
-    {
-      id: "2",
-      title: "Fevereiro",
-      speding: 1245
-    },
-    {
-      id: "3",
-      title: "Março",
-      speding: 3242
-    },
-    {
-      id: "4",
-      title: "Abril",
-      speding: 5241
-    },
-    {
-      id: "5",
-      title: "Maio",
-      speding: 4212
-    },
-    {
-      id: "6",
-      title: "Junho",
-      speding: 1200
-    },
-    {
-      id: "7",
-      title: "Julho",
-      speding: 3210
-    },
-    {
-      id: "8",
-      title: "Agosto",
-      speding: 2020
-    },
-    {
-      id: "9",
-      title: "Setembro",
-      speding: 2021
-    },
-    {
-      id: "10",
-      title: "Outubro",
-      speding: 2022
-    },
-    {
-      id: "11",
-      title: "Novembro",
-      speding: 2023
-    },
-    {
-      id: "12",
-      title: "Dezembro",
-      speding: 2024
-    },
-  ]
 
   useEffect(() => {
     return LogBox.ignoreAllLogs();
   }, []);
 
   useEffect(() => {
+    setModalLoading(true)
     //console.log(moment(test, 'DD/MM/YYYY').format("MMMM"))
     setTimeout(() => {
       //console.log(parseInt(Math.random() * 99999999))
-      buscarDado().then(e => { });
+      buscarDado().then(e => { setModalLoading(false)});
     }, 1000)
   }, []);
 
@@ -350,6 +291,8 @@ const Home: React.FC = () => {
             />
           </View>
         </ModalAlert>
+
+        <LoadingApp modalVisible={modalLoading} />
 
         <ModalAlert modalVisible={visibleModalInitial} onClose={() => setVisibleModalInitial(false)} title="Para iniciarmos :">
           <Input

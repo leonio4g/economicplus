@@ -27,11 +27,11 @@ export const ViewText = styled.View`
   margin-left: 15px
   width: 62%
 `;
-export const TextTitle = styled.Text`
-  color: #ffffff
+export const TextTitle = styled.Text<{color: string}>`
+  color: ${({color}) => color ? color : '#ff9000'}
   font-size: 15px
   font-weight: bold
-
+  margin-left: 10
 `;
 export const TextTotal = styled.Text`
 color: #ffffff

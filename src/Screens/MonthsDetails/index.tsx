@@ -8,6 +8,7 @@ import { ViewLegend, ViewText, TextLegend, ViewIndice, ViewItem, TextItem,ViewFl
 import ListDetails from '../../Components/ListDetails';
 import { getStorage, setStorage } from '../../Utils/Storage';
 import { formatMoney, formatNumber, formatPrice } from '../../Utils/format';
+import LoadingApp from '../../Components/LoadingApp';
 
 
 interface pucharseMensalProps {
@@ -31,12 +32,18 @@ const MonthsDetails: React.FC = (props: any) => {
   const [spendingMonth, setSpendingMonth] = useState(0)
   const [remaining, setRemaining] = useState(0)
 
-useEffect(() => {
-  setTimeout(() => {
-    buscarDado().then(e => { });
-  }, 1000)
-  setDataMonth(props.route.params.data.sort(function(a:any, b:any){return a.payment - b.payment}))
-},[])
+  const [modalLoading, setModalLoading ] = useState(false)
+
+
+  useEffect(() => {
+    setModalLoading(true)
+    //console.log(moment(test, 'DD/MM/YYYY').format("MMMM"))
+    setTimeout(() => {
+      //console.log(parseInt(Math.random() * 99999999))
+      buscarDado().then(e => { setModalLoading(false)});
+    }, 1000)
+    setDataMonth(props.route.params.data.sort(function(a:any, b:any){return a.payment - b.payment}))
+  }, []);
 
 const buscarDado = async () => {
   const storeSaveListMensal = await getStorage('PucharseMensal')
@@ -127,6 +134,7 @@ console.log(itemPayment)
 
   return (
     <SafeBackground isHome={false} title={props.route.params.title} >
+      <LoadingApp modalVisible={modalLoading} />
       <CardInfo
         titleCardPrimary1={`Gasto total do mês de ${props.route.params.title}`}
         valuePrimary1={formatMoney(spendingMonth)}
