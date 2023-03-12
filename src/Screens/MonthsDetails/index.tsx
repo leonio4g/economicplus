@@ -71,10 +71,6 @@ useEffect(() => {
   if(spendingMonth){
     const money = formatMoney(spendingMonth)
     const moneyS = money.replace(/([^\d])+/gim, '')
-    console.log(props.route.params.income.income )
-    console.log(moneyS)
-    console.log(props.route.params.income.income - moneyS)
-    
     setRemaining(props.route.params.income.income - moneyS)
   }
 },[spendingMonth])
@@ -133,7 +129,7 @@ console.log(itemPayment)
 }
 
   return (
-    <SafeBackground isHome={false} title={props.route.params.title} >
+    <SafeBackground isHome={false} title={props.route.params.title.slice(5)} >
       <LoadingApp modalVisible={modalLoading} />
       <CardInfo
         titleCardPrimary1={`Gasto total do mês de ${props.route.params.title}`}

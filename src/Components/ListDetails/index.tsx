@@ -25,6 +25,7 @@ interface listProps {
   installments: number;
   numberInstallment: number;
   datePayment: string;
+  payments?: boolean;
 }
 
 const ListDetails: React.FC <listProps> = ({
@@ -34,6 +35,7 @@ const ListDetails: React.FC <listProps> = ({
   paid, 
   dateSpeding, 
   installments,
+  payments,
    numberInstallment,
     datePayment
   }) => {
@@ -72,13 +74,23 @@ const ListDetails: React.FC <listProps> = ({
         <Container opacity={paid} >
         <Content>
         <ViewIcon>
+          {!payments ? 
           <TouchableOpacity onPress={onPress} >
           {paid ?
           <IconCheck name="checkcircle" size={40} color="#ff9000" />
           :
           <IconCircle name="circle" size={40} color="#ff9000" />  
         }
-          </TouchableOpacity>
+          </TouchableOpacity>  
+          :
+          <View>
+          {paid ?
+          <IconCheck name="checkcircle" size={40} color="#ff9000" />
+          :
+          <IconCircle name="circle" size={40} color="#ff9000" />  
+        }
+          </View>
+        }
         </ViewIcon>
         <ViewText>
         <View style={{flexDirection: 'row'}} >

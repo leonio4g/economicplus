@@ -98,7 +98,7 @@ const RegisterPucharseMoney: React.FC = (props: any) => {
           datePayment: datePayment,
           valueInstallment: parseInt(valuePucharse),
           numberInstallment: 1,
-          months: moment(datePayment, 'DD/MM/YYYY').format("MMMM"),
+          months:`${moment(datePayment, 'DD/MM/YYYY').format("MM")} - ${moment(datePayment, 'DD/MM/YYYY').format("MMMM")}`,
           dateSequentialMensal: datePayment
         })
         console.log(pusharseMensal)

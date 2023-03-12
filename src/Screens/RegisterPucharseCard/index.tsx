@@ -68,8 +68,6 @@ const RegisterPucharseCard: React.FC = (props: any) => {
         const storeSaveCard = await getStorage('dataCard');
         const storeSavePurcharse = await getStorage('PucharseCard');
         const storeSaveListMensal = await getStorage('PucharseMensal')
-        console.log(storeSaveCard)
-        console.log(storeSavePurcharse)
         if (storeSaveCard) {
             setStoreCard(storeSaveCard)
             const namesCard: Array<string> = storeSaveCard.map(item => item.nameCard)
@@ -81,16 +79,9 @@ const RegisterPucharseCard: React.FC = (props: any) => {
         if (storeSaveListMensal) {
             setPucharseMensal(storeSaveListMensal)
         }
-        console.log(pusharseMensal)
     };
 
-
-    useEffect(() => {
-        console.log(selectCard)
-    }, [selectCard])
-
     const handleValuePucharse = (value: string) => {
-        console.log(value)
         setValuePucharse(value)
     }
     const handleDatePucharse = (value: string) => {
@@ -119,11 +110,14 @@ const RegisterPucharseCard: React.FC = (props: any) => {
             const mesAtual = storeCard.filter(item => item.nameCard == selectCard)
             const day = moment().format("DD")
             var active = false
+            console.log('LOG CLOSED', parseInt(mesAtual[0].closed))
+            console.log('LOG DAY', parseInt(day))
             if (parseInt(day) >= parseInt(mesAtual[0].closed)) {
                 active = true
             } else {
                 active = false
             }
+            console.log('LOG PROXIMO MES', active)
             pusharseMensal.push({
                 id: parseInt(Math.random() * 99999999),
                 nameCard: selectCard,
@@ -134,9 +128,9 @@ const RegisterPucharseCard: React.FC = (props: any) => {
                 payment: false,
                 datePayment:`${mesAtual[0].maturity}/${moment().format("MM/yyyy")}` ,
                 numberInstallment: i,
-                dateSequentialMensal: i == 1 ? moment().format("DD/MM/yyyy") : !active ? moment().add(i - 1, 'month').format("DD/MM/yyyy") : moment().add(i, 'month').format("DD/MM/yyyy"),
-                months: i == 1 ? moment().format("MMMM") : !active ? moment().add(i - 1, 'month').format("MMMM") : moment().add(i, 'month').format("MMMM"),
-            })
+                dateSequentialMensal: parseInt(installments) == 1 ? moment().format("DD/MM/yyyy") : !active ? moment().add(i - 1, 'month').format("DD/MM/yyyy") : moment().add(i, 'month').format("DD/MM/yyyy"),
+                months:`${parseInt(installments) == 1 ? moment().format("MM") : !active ? moment().add(i - 1, 'month').format("MM") : moment().add(i, 'month').format("MM")} - ${parseInt(installments) == 1 ? moment().format("MMMM") : !active ? moment().add(i - 1, 'month').format("MMMM") : moment().add(i, 'month').format("MMMM")}`,
+            })           
         }
         console.log(pusharseMensal)
         setStorage('PucharseMensal', pusharseMensal)

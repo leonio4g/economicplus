@@ -85,7 +85,7 @@ const [modalLoading, setModalLoading ] = useState(false)
 
   useEffect(() => {
     setModalLoading(true)
-    //console.log(moment(test, 'DD/MM/YYYY').format("MMMM"))
+    //console.log(moment().add( 1, 'month').format("MM"))
     setTimeout(() => {
       //console.log(parseInt(Math.random() * 99999999))
       buscarDado().then(e => { setModalLoading(false)});
@@ -151,7 +151,7 @@ const [modalLoading, setModalLoading ] = useState(false)
       }, 0))
       const monthss = notPayment.map((item) => item.months)
       const monthsUnique: any = monthss.filter((este, i) => monthss.indexOf(este) === i)
-      setMonthsList(monthsUnique)
+      setMonthsList(monthsUnique.sort())
     } else {
       monthsList([])
     }
@@ -341,7 +341,7 @@ const [modalLoading, setModalLoading ] = useState(false)
           renderItem={({ item }) => (
             <ListMonths
               onPress={() => handleNavigation(item, "MonthsDetails")}
-              title={item}
+              title={item.slice(5)}
               speding={1212}
             />
           )}
