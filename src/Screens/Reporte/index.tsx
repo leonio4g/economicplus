@@ -45,7 +45,7 @@ const Reporte: React.FC = () => {
 
   return (
     <SafeBackground isHome={false} title='Reporte ou Melhorias' >
-      <CardInfo solo info='Descreva com maxímo de detalhes possíveis o que deseja reportar ou melhorar.' />
+      <CardInfo solo info='Descreva aqui suas criticas ou sujestões para melhorias da aplicação.' />
       <Container>
         <ViewInputs>
           <Input

@@ -33,6 +33,7 @@ const CustomDrawerContent = (props: any) => {
 
 
                     <DrawerItem
+                    style={{width: '100%'}}
                         {...props}
                         label={() => (
                             <Text style={{ 
@@ -41,8 +42,8 @@ const CustomDrawerContent = (props: any) => {
                                 borderWidth: 1,
                                 textAlign: 'center' ,
                                 borderColor: '#ff9000',
-                                padding: 13,
-                                borderRadius: 15
+                                padding: 11,
+                                borderRadius: 12
                                 }}>
                                 Meus Cartões
                             </Text>
@@ -51,6 +52,7 @@ const CustomDrawerContent = (props: any) => {
                     />
 
                     <DrawerItem
+                    style={{width: '100%'}}
                         {...props}
                         label={() => (
                             <Text style={{ 
@@ -59,7 +61,7 @@ const CustomDrawerContent = (props: any) => {
                                 borderWidth: 1,
                                 textAlign: 'center' ,
                                 borderColor: '#ff9000',
-                                padding: 13,
+                                padding: 11,
                                 borderRadius: 15
                                 }}>
                                 Contas Pagas
@@ -69,6 +71,7 @@ const CustomDrawerContent = (props: any) => {
                     />
 
                     <DrawerItem
+                    style={{width: '100%'}}
                         {...props}
                         label={() => (
                             <Text style={{ 
@@ -77,10 +80,10 @@ const CustomDrawerContent = (props: any) => {
                                 borderWidth: 1,
                                 textAlign: 'center' ,
                                 borderColor: '#ff9000',
-                                padding: 13,
+                                padding: 11,
                                 borderRadius: 15
                                 }}>
-                                Reporta Problema ou Melhorias
+                                Envio de Reporte
                             </Text>
                         )}
                         onPress={() => props.navigation.navigate('report')}

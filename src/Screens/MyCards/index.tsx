@@ -4,7 +4,7 @@ import SafeBackground from '../../Components/SafeBackground';
 import Icon from 'react-native-vector-icons/AntDesign'
 import IconDelete from 'react-native-vector-icons/MaterialCommunityIcons'
 import CardInfo from '../../Components/CardInfo';
-import { getStorage } from '../../Utils/Storage';
+import { getStorage, setStorage } from '../../Utils/Storage';
 
 
 import { 
@@ -30,13 +30,14 @@ const MyCards: React.FC = () => {
 
   const [storeCard, setStoreCard] = useState<cardProps[]>([])
   const [modalLoading, setModalLoading ] = useState(false)
+  const [reloading, setRealoding ] = useState(false)
 
   useEffect(() => {
     setModalLoading(true)
     setTimeout(() => {
       buscarDado().then(e => { setModalLoading(false)});
     }, 1000)
-  }, []);
+  }, [reloading]);
 
   const buscarDado = async () => {
     const storageSave = await getStorage('dataCard');
@@ -47,6 +48,17 @@ const MyCards: React.FC = () => {
       setStoreCard([])
     }
   };
+
+
+  const handleDelete = (item: cardProps) => {
+    var index = storeCard.indexOf(item);
+    console.log(index)
+    if (index > -1) {
+  storeCard.splice(index, 1);
+}
+setRealoding(!reloading)
+    setStorage('dataCard', storeCard)
+  }
 
   const ListRender = (item: cardProps) => {
     const getType = (value: string | undefined) => {
@@ -93,7 +105,7 @@ const MyCards: React.FC = () => {
                 <TextSubTitle>Fecha. dia : {item.closed}</TextSubTitle>
                 </ViewSubText>
               </ViewText>
-              <ViewDelete>
+              <ViewDelete onPress={() => handleDelete(item)} >
               <IconDelete name="delete-outline" size={30} color="#be2929" />
               </ViewDelete>
             </Content>

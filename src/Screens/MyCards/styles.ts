@@ -31,7 +31,7 @@ export const ViewText = styled.View`
 margin-left: 15px
 width: 66%
 `;
-export const ViewDelete = styled.View`
+export const ViewDelete = styled.TouchableOpacity`
 width: 20%
 justify-content: center
 `;

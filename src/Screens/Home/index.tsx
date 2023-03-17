@@ -123,19 +123,8 @@ const [modalLoading, setModalLoading ] = useState(false)
       setPucharseMensal([])
     }
     //pusharseMensal.map(item => console.log(item.dateSequentialMensal))
-    if (storageSavePucharseCard) {
-      setTotalCard(storageSavePucharseCard.reduce(function (accumulator: any, value: pucharseCardProps) {
-        return accumulator + value.valueInstallment
-      }, 0))
-      setStoragePucharseCard(storageSavePucharseCard)
-    }
 
-    if (storageSavePucharseMoney) {
-      setStoragePucharseMoney(storageSavePucharseMoney)
-      setTotalMoney(storageSavePucharseMoney.reduce(function (accumulator: number, value: pucharseMoneyProps) {
-        return accumulator + value.valuePucharse
-      }, 0))
-    }
+
 
 
   };
@@ -145,7 +134,7 @@ const [modalLoading, setModalLoading ] = useState(false)
       const notPayment = pusharseMensal.filter((item) => item.payment == false)
       const payment = pusharseMensal.filter((item) => item.payment == true)
       const monthAnte = moment().subtract(1, 'month').format("MMMM")
-      const itemMonthAnte = payment.filter(item => item.months === monthAnte)
+      const itemMonthAnte = payment.filter(item => item.months.slice(5) === monthAnte)
       setTotalMonthAnte(itemMonthAnte.reduce(function (accumulator: number, value: pucharseMensalProps) {
         return accumulator + value.valueInstallment
       }, 0))
@@ -164,10 +153,13 @@ const [modalLoading, setModalLoading ] = useState(false)
   }, [store])
 
   useEffect(() => {
-    setTotalMonth(totalCard + totalMoney)
-  }, [totalMoney, totalCard, storePucharseCard, setStoragePucharseMoney, monthsList])
-
-
+    if (pusharseMensal) {
+      const result = pusharseMensal.filter(item => item.months === `${moment().format("MM")} - ${moment().format("MMMM")}` && item.payment != true )
+      setTotalMonth(result.reduce(function (accumulator: any, value: pucharseMensalProps) {
+        return accumulator + value.valueInstallment
+      }, 0))
+    }
+  },[pusharseMensal])
 
   const handleNavigation = (item: string, screen: string) => {
     setVisibleModalPayment(false)
