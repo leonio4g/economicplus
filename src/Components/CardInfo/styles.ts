@@ -28,4 +28,5 @@ align-items: center
 export const ViewText = styled.View`
 align-items: center
 margin-top: 10px
+flex-direction: row
 `;

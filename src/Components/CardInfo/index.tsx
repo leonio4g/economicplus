@@ -1,5 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
+import { TouchableOpacity } from 'react-native';
+import IconPlus from 'react-native-vector-icons/AntDesign'
 
 import {
     Container,
@@ -19,6 +21,7 @@ interface cardProps {
     titleCardSecundary?: string,
     valueSecudary?: string
     info?: string
+    addMoney?: () => void;
 }
 
 const CardInfo: React.FC<cardProps> = ({
@@ -29,6 +32,7 @@ const CardInfo: React.FC<cardProps> = ({
     valuePrimary2,
     titleCardSecundary,
     valueSecudary,
+    addMoney,
     info
 }) => {
     return (
@@ -38,17 +42,21 @@ const CardInfo: React.FC<cardProps> = ({
                     <Container>
                         <ViewMensal>
                             <TextTitle>{titleCardPrimary1}</TextTitle>
+                            
                             <ViewText>
                                 <TextValue>{valuePrimary1}</TextValue>
+                                <TouchableOpacity style={{marginLeft: 10}} onPress={addMoney} >
+                                <IconPlus name="pluscircleo" size={20} color="#ff9000" />
+                            </TouchableOpacity>
                             </ViewText>
                         </ViewMensal>
                         {titleCardPrimary2 &&
-                        <ViewSpeding>
-                        <TextTitle>{titleCardPrimary2}</TextTitle>
-                        <ViewText>
-                            <TextValue>{valuePrimary2}</TextValue>
-                        </ViewText>
-                    </ViewSpeding>
+                            <ViewSpeding>
+                                <TextTitle>{titleCardPrimary2}</TextTitle>
+                                <ViewText>
+                                    <TextValue>{valuePrimary2}</TextValue>
+                                </ViewText>
+                            </ViewSpeding>
                         }
                     </Container>
                     <Container>

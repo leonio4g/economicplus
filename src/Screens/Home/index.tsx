@@ -63,9 +63,11 @@ const Home: React.FC = () => {
   const [monthsList, setMonthsList] = useState([])
   const [visibleModalPayment, setVisibleModalPayment] = useState(false)
   const [visibleModalInitial, setVisibleModalInitial] = useState(false)
-  
+  const [visibleModalAdd, setVisibleModalAdd] = useState(false)
+
   const [textName, setTextName] = useState('')
   const [textValue, setTextValue] = useState('')
+  const [textValueAdd, setTextValueAdd] = useState('')
   const [income, setIncome ] = useState(0)
   const [store, setStore] = useState<storeProps>()
   const [totalCard, setTotalCard] = useState(0);
@@ -212,12 +214,14 @@ const [modalLoading, setModalLoading ] = useState(false)
     }
     setCheckNew(!checkNew)
   }
-
+  const handleAdd = (value: any) => {
+    const number = formatPrice(value)
+    setTextValueAdd(number)
+  }
   const handleMensal = (value: any) => {
     const number = formatPrice(value)
     setTextValue(number)
   }
-
   const handleSetDataInicial = () => {
     const data = {
       name: textName,
@@ -227,7 +231,20 @@ const [modalLoading, setModalLoading ] = useState(false)
     setStore(data)
     setVisibleModalInitial(false)
   }
-
+const handleAddMoney = () => {
+  let valueActual = parseInt(store?.income)
+  let valuleAdd = textValueAdd.replace(/([^\d])+/gim, '')
+  //console.log(test + parseInt(test1))
+  let some = valueActual + parseInt(valuleAdd)
+  const data = {
+    name: textName,
+    income: some
+  }
+  setStorage('DataInicial', data)
+  setStore(data)
+  setTextValueAdd('')
+  setVisibleModalAdd(!visibleModalAdd)
+}
   const EmptyList = () => {
     return (
 
@@ -287,6 +304,9 @@ const [modalLoading, setModalLoading ] = useState(false)
         <LoadingApp modalVisible={modalLoading} />
 
         <ModalAlert modalVisible={visibleModalInitial} onClose={() => setVisibleModalInitial(false)} title="Para iniciarmos :">
+          <View>
+            <Text></Text>
+          </View>
           <Input
             Label='Qual seu nome ?'
             placeholder='fulano da silva'
@@ -311,6 +331,24 @@ const [modalLoading, setModalLoading ] = useState(false)
           </View>
         </ModalAlert>
 
+
+        <ModalAlert modalVisible={visibleModalAdd} onClose={() => setVisibleModalAdd(false)} title="Valor adicional:">
+        <Input
+            Label='Qual valor a ser acrescentado ?'
+            placeholder='200,00'
+            keyboardType='numeric'
+            placeholderTextColor='#999591'
+            value={textValueAdd}
+            onChangeText={handleAdd}
+          />
+          <View style={{ marginVertical: 25 }} >
+            <Button
+              title="Adicionar"
+              onPress={handleAddMoney}
+            />
+          </View>
+        </ModalAlert>
+
         <CardInfo
           titleCardPrimary1="Renda mensal"
           valuePrimary1={`R$ ${formatPrice(income)}`}
@@ -318,6 +356,7 @@ const [modalLoading, setModalLoading ] = useState(false)
           valuePrimary2={formatMoney(totalMonthante)}
           titleCardSecundary='Total a pagar no mês atual'
           valueSecudary={formatMoney(totalMonth)}
+          addMoney={() => setVisibleModalAdd(!visibleModalAdd)}
         />
 
         {monthsList.length != 0 &&
